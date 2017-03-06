@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ADOR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style media="screen">
+
+      input {display: block;}
+      body {
+        font-size: 200%;
+        max-width: 15em;
+        font-family: AvenirNext-bold, Arial;
+        font-weight: 800;
+        margin:auto;
+        padding: 0 .5em;
+        color: #333;
+        background: #f4f4f3;
+      }
+      input {
+        font-size: 1em;
+        padding:.25em;
+        margin: 1em 0;
+      }
+      [type=submit] {
+        color: inherit;
+        border: none;
+        background: none;
+        padding:0;
+        text-decoration: underline;
+        cursor: pointer
+      }
+      [type=submit]:hover {
+        color: #08f
+      }
+
+      #state {
+        height: 10px;
+        background: #ccc;
+        margin-bottom: 1em;
+        transition: 1s;
+        border-radius: 0 0 2px 2px;
+      }
+
+      .connected #state {
+        background: aquamarine
+      }
+
+      ol {padding:0;}
+      li {
+        transition: .2s;
+        margin: .4em 0;
+        list-style: none;
+      }
+      li.spacer, li.spacer {
+        height: 1em;
+      }
+
+      .active {
+        color: #000;
+        outline: none;
+      }
+      .inactive {
+        color: #aaa;
+        transform: translateY(2px);
+        opacity: 0.4;
+      }
+
+      li[tabindex] {
+        cursor: pointer;
+      }
+
+      li section {
+        display: none;
+        font-family: AvenirNext-ultralight, Arial;
+        font-weight: 100;
+        white-space: pre;
+        font-size: .85em;
+        margin: 1em 0;
+        background: #fff;
+        padding: .5em;
+      }
+      li.active section {
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="connected">
+    <div id="state"></div>
+
+    <!-- <form>
+      <input type="url" name="url" id="u" placeholder="url://here">
+      <input type="submit" value="Connect">
+    </form>
+
+    <script type="text/javascript">
+      u.value = unescape(
+        (location.search||'').match(
+          /[?&]url=(.*)[&#]?/
+        )[1] || ''
+      )
+    </script>
+ -->
+
+    <ol>
+
+      <li tabindex="1">
+        &rarr; /$/battery
+        <section>{
+  this: 'ok',
+  code: yeah
+}</section>
+      </li>
+      <li tabindex="1">&rarr; /$/touch
+<section>{
+more:stuff
+}</section>
+      </li>
+      <li tabindex="1" class="activex">&rarr; /$/orientation
+        <section>{
+        and more:stuff
+}</section></li>
+      <li tabindex="1">&rarr; /$/lux</li>
+
+      <li class="spacer"></li>
+      <li tabindex="1">&larr; /~/move</li>
+      <li tabindex="1">&larr; /~/play</li>
+      <li tabindex="1">&larr; /~/show</li>
+
+
+      <li class="spacer"></li>
+      <li tabindex="1">demo</li>
+    </ol>
+
+    <script type="text/javascript">
+      document.body.addEventListener('focus', function(e){
+        console.log("focus", this, e)
+      }, false)
+
+      var sections = Array.from(
+        document.querySelectorAll('li[tabindex]')
+      )
+
+      function setFocus(target) {
+
+        sections.forEach(function(section){
+          section.className = target === section ? 'active' : 'inactive'
+        })
+
+      }
+
+      sections.forEach(function(section){
+        section.addEventListener('focus', () => {
+          setFocus(section)
+        }, false)
+      })
+
+    </script>
+
+  </body>
+</html>
