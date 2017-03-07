@@ -1,52 +1,47 @@
-// import Connection from './Connection.html'
-//
-// const connection = new Connection({
-//   target: document.querySelector('header')
-// })
-//
-// connection.on('connected', (client) => {
-//
-//   console.log("Connected", client)
-//
-//   document.body.addEventListener('click', (e) => {
-//     e.preventDefault()
-//     const v = ~~(Math.random()*255)
-//     client.publish('/debug/press', v)
-//   }, false)
-//
-//   client.subscribe('/debug/press')
-//
-//   client.on('message', (topic, buffer) => {
-//     const payload = buffer.toString()
-//     console.log("message:", topic, payload)
-//
-//     document.body.style.backgroundColor =
-//       `hsl(${payload}, 50%, 50%)`
-//   })
-//
-// })
+import mqtt from '../node_modules/mqtt/dist/mqtt.min.js'
+
+const qs = document.querySelector.bind(document)
+
+// todo: use session store
+const clientId = `c_${Math.random().toString(16).substr(2, 6)}`
 
 
+/* todo - choose host from url.
 
-var sections = Array.from(
-  document.querySelectorAll('li[tabindex]')
-)
+Rules:
+  ?a - wss://iot.benjaminbenben.eu
+  ?b - wss://test.mosquitto.org:8081
+  ?192.168.0.42 - wss://192.168.0.1
+  ?192.168.0.42:8081 - wss://192.168.0.1:8081
+*/
+var client  = mqtt.connect('wss://iot.benjaminbenben.eu', {clientId})
 
-function setFocus(target) {
+// keep track of packets sent and received
+let up = 0, dn = 0
+const $up = qs('#up'), $dn = qs('#dn')
+client.on('packetsend', () => $up.innerText = '↑'+(++up))
+client.on('packetreceive', () => $dn.innerText = '↓'+(++dn))
 
-  sections.forEach(function(section){
-    section.className = target === section ? 'active' : 'inactive'
-  })
 
-}
+const sections = [].slice.call(document.querySelectorAll('li[tabindex]'), 0)
 
 sections.forEach(function(section){
   section.addEventListener('focus', () => {
     section.className = 'active'
-    // setFocus(section)
   }, false)
 
   section.addEventListener('blur', () => {
     section.className = ''
   }, false)
 })
+
+
+let touches = 0
+qs('#touch').addEventListener('click', (e) => {
+  e.preventDefault()
+  client.publish(`/phone/${clientId}/touches`, 't-'+(++touches))
+}, false)
+qs('#touch').addEventListener('touchstart', (e) => {
+  e.preventDefault()
+  client.publish(`/phone/${clientId}/touches`, 't-'+(++touches))
+}, false)

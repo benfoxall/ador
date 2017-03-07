@@ -17,9 +17,13 @@ input[type=file] {
   margin-bottom: 2em;
 }
 
+#up, #dn {
+  font-size: 0.5em;
+  color: #f08;
+}
 
 
-ol {padding:0;}
+ol {padding:0; user-select: none;}
 li {
   transition: .2s;
   margin: .4em 0;
