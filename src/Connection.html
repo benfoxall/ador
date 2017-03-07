@@ -2,7 +2,7 @@
   <div id="state"></div>
 
   <form id="connection" on:submit='connect(event)' class={{state}}>
-    <input id="url" type="url" placeholder="mqtt://url" bind:value='url' on:keyup='keyup()' bind:disabled='disabled'>
+    <input id="url" type="text" placeholder="url" bind:value='url' on:keyup='keyup()'>
     <input id="submit" type="submit" bind:value='submit_text'>
   </form>
 </div>
@@ -85,10 +85,10 @@ export default {
 
       this.set({state: 'connecting'})
 
-      connect()
-        .then(() => {
+      connect(this.get('url'))
+        .then((mqt) => {
           this.set({state: 'connected'})
-          this.fire('connected')
+          this.fire('connected', mqt)
         }, () => {
           this.set({state: 'error'})
         })
@@ -103,16 +103,73 @@ export default {
       if(this.get('state') == 'error') {
         this.set({state: 'ready'})
       }
-
     }
   }
 }
 
 
-const connect = () => {
-  return new Promise((accept, reject) => {
-    setTimeout(reject, 1000)
+import MQT from '../mqt/index.js'
+//mqtt@2.4.0/dist/mqtt.min.js
+
+// const connect = url => {
+//   const mqt = MQT(url)
+//   return mqt.ready.then(() => mqt)
+// }
+
+import mqtt from '../node_modules/mqtt/dist/mqtt.min.js'
+
+
+window.mqtt = mqtt
+
+var client  = mqtt.connect('ws://iot.benjaminbenben.eu')
+
+client.on('connect', function () {
+  client.subscribe('presence')
+  client.publish('presence', 'Hello mqtt')
+})
+
+client.on('message', function (topic, message) {
+  // message is Buffer
+  console.log(message.toString())
+  // client.end()
+})
+
+
+window.client = client
+
+const connect = url => {
+
+  var client = mqtt.connect(url)
+
+  return new Promise((resolve, reject) => {
+    let handled
+
+    client.on('connect', () => {
+      if(!handled) {
+        resolve(client)
+        handled = true
+      }
+    })
+    client.on('error', () => {
+      if(!handled) {
+        reject(client)
+        client.end()
+      }
+    })
+
+    setTimeout(() => {
+      if(!handled) {
+        handled = true
+        client.end()
+        reject()
+      }
+    }, 10000)
   })
+
+  return Promise.resolve(client)
+
+
+  // return mqt.ready.then(() => mqt)
 }
 
 
