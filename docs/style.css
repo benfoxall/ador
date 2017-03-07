@@ -8,6 +8,7 @@ body {
   padding: 0 .5em;
   color: #333;
   background: #f4f4f3;
+  min-height: 100vh
 }
 input {
   font-size: 1em;
