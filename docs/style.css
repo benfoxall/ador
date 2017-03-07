@@ -10,11 +10,13 @@ body {
   background: #f4f4f3;
   min-height: 100vh
 }
-input {
-  font-size: 1em;
-  padding:.25em;
-  margin: 1em 0;
+
+input[type=file] {
+  background: #fff;
+  padding: 2em;
+  margin-bottom: 2em;
 }
+
 
 
 ol {padding:0;}
@@ -28,7 +30,7 @@ li.spacer, li.spacer {
 }
 
 .active {
-  color: #000;
+  color: #f08;
   outline: none;
 }
 .inactive {

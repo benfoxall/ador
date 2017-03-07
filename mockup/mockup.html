@@ -129,7 +129,7 @@ more:stuff
 
 
       <li class="spacer"></li>
-      <li tabindex="1" class="active">
+      <li tabindex="1">
         demo
         <section>
           <input type="file">
@@ -138,9 +138,6 @@ more:stuff
     </ol>
 
     <script type="text/javascript">
-      document.body.addEventListener('focus', function(e){
-        console.log("focus", this, e)
-      }, false)
 
       var sections = Array.from(
         document.querySelectorAll('li[tabindex]')
