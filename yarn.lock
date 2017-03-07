@@ -164,7 +164,14 @@ rollup-plugin-node-resolve@^2.0.0:
     builtin-modules "^1.1.0"
     resolve "^1.1.6"
 
-rollup-pluginutils@^1.5.0, rollup-pluginutils@^1.5.1:
+rollup-plugin-svelte@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-svelte/-/rollup-plugin-svelte-1.6.0.tgz#9dd3a13f19f2832313170b0bc61d02ceb08da5a0"
+  dependencies:
+    rollup-pluginutils "^1.5.2"
+    svelte "^1.6.0"
+
+rollup-pluginutils@^1.5.0, rollup-pluginutils@^1.5.1, rollup-pluginutils@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-1.5.2.tgz#1e156e778f94b7255bfa1b3d0178be8f5c552408"
   dependencies:
@@ -202,6 +209,12 @@ strip-ansi@^3.0.0:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
+
+svelte@^1.6.0:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-1.10.3.tgz#a9e1e5991c7dacc0a87ecd4240b2820a0397425f"
+  dependencies:
+    magic-string "^0.19.0"
 
 vlq@^0.2.1:
   version "0.2.1"

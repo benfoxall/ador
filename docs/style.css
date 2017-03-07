@@ -14,36 +14,7 @@ input {
   padding:.25em;
   margin: 1em 0;
 }
-[type=submit] {
-  color: inherit;
-  border: none;
-  background: none;
-  padding:0;
-  text-decoration: underline;
-  cursor: pointer
-}
-[type=submit]:hover {
-  color: #08f
-}
-form[data-state=error] [type=url]{
-  color: #f00
-}
 
-#state {
-  height: 10px;
-  background: #ccc;
-  margin-bottom: 1em;
-  transition: 1s;
-  border-radius: 0 0 2px 2px;
-}
-
-.connected #state {
-  background: aquamarine
-}
-
-#state.error {
-  background: red
-}
 
 ol {padding:0;}
 li {

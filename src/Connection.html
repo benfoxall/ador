@@ -1,0 +1,119 @@
+<div id="root" class={{state}}>
+  <div id="state"></div>
+
+  <form id="connection" on:submit='connect(event)' class={{state}}>
+    <input id="url" type="url" placeholder="mqtt://url" bind:value='url' on:keyup='keyup()' bind:disabled='disabled'>
+    <input id="submit" type="submit" bind:value='submit_text'>
+  </form>
+</div>
+<style media="screen">
+
+  #url {
+    transition: .2s
+  }
+
+  #submit {
+    color: inherit;
+    border: none;
+    background: none;
+    padding:0;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: .2s
+  }
+  #submit:hover {
+    color: #08f
+  }
+
+  #root.error #url{
+    color: #f00
+  }
+  #root.error #submit{
+    color: #f00
+  }
+
+  #state {
+    height: 10px;
+    background: #ccc;
+    margin-bottom: 1em;
+    transition: 1s;
+    border-radius: 0 0 2px 2px;
+  }
+
+  #state {
+    background: #ccc;
+  }
+
+  #root.connecting #state {
+    background: #000
+  }
+
+  #root.connected #state{
+    background: aquamarine
+  }
+
+  #root.connected #connection {
+    display:none
+  }
+
+</style>
+
+<script>
+
+const search = location.search||''
+const match = search.match(/[?&]url=(.*)[&#]?/)
+const initialURL = match ? unescape(match[1]) : '';
+
+export default {
+  data () {
+    return {
+      url: initialURL,
+      state: 'ready'
+    }
+  },
+
+  computed: {
+    disabled: state => state == 'connecting',
+    submit_text: state => state == 'connecting' ? 'Connecting' : 'Connect'
+  },
+
+  methods: {
+    connect(e) {
+      e.preventDefault()
+
+      if(this.get('state') == 'connecting') return
+
+      this.set({state: 'connecting'})
+
+      connect()
+        .then(() => {
+          this.set({state: 'connected'})
+          this.fire('connected')
+        }, () => {
+          this.set({state: 'error'})
+        })
+
+      // update the url for reloads
+      history.pushState(
+        {},document.name,
+        `?url=${escape(this.get('url'))}`
+      )
+    },
+    keyup(e) {
+      if(this.get('state') == 'error') {
+        this.set({state: 'ready'})
+      }
+
+    }
+  }
+}
+
+
+const connect = () => {
+  return new Promise((accept, reject) => {
+    setTimeout(reject, 1000)
+  })
+}
+
+
+</script>
