@@ -1,1 +1,79 @@
-h1 {font-weight: 100; color: #333}
+input {display: block;}
+body {
+  font-size: 200%;
+  max-width: 15em;
+  font-family: AvenirNext-bold, Arial;
+  font-weight: 800;
+  margin:auto;
+  padding: 0 .5em;
+  color: #333;
+  background: #f4f4f3;
+}
+input {
+  font-size: 1em;
+  padding:.25em;
+  margin: 1em 0;
+}
+[type=submit] {
+  color: inherit;
+  border: none;
+  background: none;
+  padding:0;
+  text-decoration: underline;
+  cursor: pointer
+}
+[type=submit]:hover {
+  color: #08f
+}
+
+#state {
+  height: 10px;
+  background: #ccc;
+  margin-bottom: 1em;
+  transition: 1s;
+  border-radius: 0 0 2px 2px;
+}
+
+.connected #state {
+  background: aquamarine
+}
+
+ol {padding:0;}
+li {
+  transition: .2s;
+  margin: .4em 0;
+  list-style: none;
+}
+li.spacer, li.spacer {
+  height: 1em;
+}
+
+.active {
+  color: #000;
+  outline: none;
+}
+.inactive {
+  color: #aaa;
+  transform: translateY(2px);
+  opacity: 0.4;
+}
+
+li[tabindex] {
+  cursor: pointer;
+}
+
+li section {
+  display: none;
+  font-family: AvenirNext-ultralight, Arial;
+  font-weight: 100;
+  white-space: pre;
+  font-size: .85em;
+  margin: 1em 0;
+  background: #fff;
+  padding: .5em;
+}
+li.active section {
+  display: block;
+  
+
+}
